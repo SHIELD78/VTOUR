@@ -5,7 +5,18 @@ class RestaurantDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, String>?;
+
+    if (args == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Error'),
+        ),
+        body: Center(
+          child: Text('No details available.'),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(

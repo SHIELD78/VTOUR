@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  carousel_slider: ^5.0.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -59,9 +61,20 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+  - lib/image/hello.jpg
+  - lib/image/burgerking.jpg
+  - lib/image/hill1.jpg
+  - lib/image/hill2.jpg
+  - lib/image/inox.jpg
+  - lib/image/kalash_parbeet.jpg
+  - lib/image/lalit_vihar.jpg
+  - lib/image/mcdonalds.jpg
+  - lib/image/snooker.jpg
+  - lib/image/taramaa.jpg
+  - lib/image/turf.jpg
+  - lib/image/zaitoon2.jpg
+ 
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
