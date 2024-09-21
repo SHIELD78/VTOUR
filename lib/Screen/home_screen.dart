@@ -6,166 +6,120 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background gradient
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFFE3F2FD), Color(0xFFBBDEFB)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
+      appBar: AppBar(
+        title: Text('Home'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              // Navigate to search screen
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchScreen()),
+              );
+            },
           ),
-          // Header without back button
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              color: Colors.black.withOpacity(0.9),
-              padding: EdgeInsets.all(16.0),
-              child: Row(
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // User Reviews Section
+              Text('User Reviews', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              SizedBox(height: 16),
+              _buildReviewCard(),
+              SizedBox(height: 24),
+
+              // Popular Destinations Section
+              Text('Popular Destinations', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              SizedBox(height: 8),
+              GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
                 children: [
-                  // Add the "VTour" text on the left
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'V',
-                          style: TextStyle(
-                            fontSize: 24, 
-                            fontWeight: FontWeight.bold, 
-                            color: Colors.blue, // "V" in blue
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'Tour',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white, // "Tour" in white
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Spacer(),
+                  _buildDestinationCard('Pondicherry', 'French colonial charm', 'lib/image/hello.jpg'),
+                  _buildDestinationCard('Ooty', 'Queen of hill stations', 'lib/image/hello.jpg'),
+                ],
+              ),
+              SizedBox(height: 24),
+
+              // Upcoming Trips Section
+              Text('Upcoming Trips', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              SizedBox(height: 16),
+              _buildUpcomingTripCard(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Modified Review Card (Larger, with image on the right)
+  Widget _buildReviewCard() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    "Home",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    "I absolutely love Vitian Util! It made planning my weekend trip to Pondicherry so easy. The personalized itinerary feature is a game-changer!",
+                    style: TextStyle(fontSize: 18),
                   ),
-                  Spacer(),
-                  IconButton(
-                    icon: Icon(Icons.search),
-                    onPressed: () {
-                      // Navigate to search screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SearchScreen()),
-                      );
-                    },
-                  ),
+                  SizedBox(height: 8),
+                  Text("Alice S.", style: TextStyle(fontSize: 16, color: Colors.blueGrey)),
                 ],
               ),
             ),
-          ),
-          // Main content wrapped with SingleChildScrollView to avoid overflow
-          Padding(
-            padding: const EdgeInsets.only(top: 80.0),
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Reviews carousel (centered, larger)
-                    Text(
-                      'User Reviews',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 16),
-                    CarouselSlider(
-                      options: CarouselOptions(
-                        height: 200.0,
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                      ),
-                      items: _buildReviews().map((review) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Card(
-                              elevation: 4,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                    maxHeight: 150,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        review['text'] ?? '',
-                                        style: TextStyle(fontSize: 18),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 3,
-                                      ),
-                                      SizedBox(height: 8),
-                                      Text(
-                                        review['author'] ?? '',
-                                        style: TextStyle(fontSize: 16, color: Colors.blueGrey),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(height: 16),
-                    // Popular Destinations
-                    Text(
-                      'Popular Destinations',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 8),
-                    Container(
-                      height: 180, // Increased height to accommodate card content
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          _buildDestinationCard('Pondicherry', 'French colonial charm', 'lib/image/hello.jpg'),
-                          SizedBox(width: 16),
-                          _buildDestinationCard('Ooty', 'Queen of hill stations', 'lib/image/hello.jpg'),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    // Upcoming Trips
-                    Text(
-                      'Upcoming Trips',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    Card(
-                      elevation: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            _buildUpcomingTrip('Weekend Getaway to Pondicherry', 'July 15-17, 2023'),
-                            SizedBox(height: 8),
-                            _buildUpcomingTrip('Day Trip to Yelagiri Hills', 'July 23, 2023'),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+            SizedBox(width: 16),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset(
+                'lib/image/hello.jpg',  // Placeholder image path
+                height: 100,
+                width: 80,
+                fit: BoxFit.cover,
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Reusable Destination Card for Popular Destinations
+  Widget _buildDestinationCard(String title, String subtitle, String imageUrl) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+            child: Image.asset(imageUrl, height: 100, fit: BoxFit.cover, width: double.infinity),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 4),
+                Text(subtitle, style: TextStyle(color: Colors.blueGrey)),
+              ],
             ),
           ),
         ],
@@ -173,76 +127,28 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  // Review data for the carousel
-  List<Map<String, String>> _buildReviews() {
-    return [
-      {
-        'text':
-            "I absolutely love Vitian Util! It made planning my weekend trip to Pondicherry so easy. The personalized itinerary feature is a game-changer!",
-        'author': "Alice S.",
-      },
-      {
-        'text': "Vitian Util helped me find the best spots in Ooty. A must-have app for every traveler!",
-        'author': "John D.",
-      },
-      {
-        'text':
-            "Thanks to Vitian Util, I discovered hidden gems in Pondicherry that I wouldn't have found otherwise!",
-        'author': "Emily R.",
-      },
-    ];
-  }
-
-  // Reusable UI for destination cards
-  Widget _buildDestinationCard(String title, String subtitle, String imageUrl) {
-    return Container(
-      width: 140, // Set a fixed width for the card
-      child: Card(
-        elevation: 2,
+  // Upcoming Trip Card (Larger Image with Calendar)
+  Widget _buildUpcomingTripCard() {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min, // Ensure the column takes minimal space
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image with fixed height
-            Container(
-              height: 90, // Adjust height to fit within the card
-              width: double.infinity,
-              child: Image.asset(
-                imageUrl,
-                fit: BoxFit.cover,
-              ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset('lib/image/burgerking.jpg', height: 150, fit: BoxFit.cover), // Calendar image
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              child: Text(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1, // Limit to one line
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                subtitle,
-                style: TextStyle(color: Colors.blueGrey, fontSize: 12),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1, // Limit to one line
-              ),
-            ),
-            SizedBox(height: 4),
+            SizedBox(height: 16),
+            Text('Weekend Getaway to Pondicherry', style: TextStyle(fontWeight: FontWeight.bold)),
+            SizedBox(height: 8),
+            Text('July 15-17, 2023'),
+            Text('Day Trip to Yelagiri Hills'),
           ],
         ),
       ),
-    );
-  }
-
-  // Reusable UI for upcoming trip tiles
-  Widget _buildUpcomingTrip(String title, String date) {
-    return ListTile(
-      leading: Icon(Icons.calendar_today),
-      title: Text(title),
-      subtitle: Text(date),
     );
   }
 }
