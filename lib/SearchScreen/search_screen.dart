@@ -76,13 +76,13 @@ class _SearchScreenState extends State<SearchScreen> {
               "Recent Searches",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            RecentSearches(),
+            const RecentSearches(),
             const SizedBox(height: 20),
             const Text(
               "What's India Searching For",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            PopularSearches(),
+            const PopularSearches(),
             const SizedBox(height: 20),
             const Text(
               "Search Results",

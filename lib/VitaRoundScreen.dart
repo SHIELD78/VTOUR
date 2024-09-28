@@ -27,7 +27,7 @@ class _VitaRoundScreenState extends State<VitaRoundScreen> {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -125,7 +125,7 @@ class _VitaRoundScreenState extends State<VitaRoundScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
             children: [
-              Icon(Icons.restaurant, color: Colors.blue), // Add icon for each category
+              const Icon(Icons.restaurant, color: Colors.blue), // Add icon for each category
               const SizedBox(width: 8),
               Text(
                 title,
@@ -173,7 +173,7 @@ class _VitaRoundScreenState extends State<VitaRoundScreen> {
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 5,
@@ -225,7 +225,7 @@ class RestaurantDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(args['name']!),
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Column(

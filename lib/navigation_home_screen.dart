@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'Screen/home_screen.dart';
-
+import 'Screen/profile_screen.dart';
 import 'Screen/Bookings_screen.dart';
 import 'Screen/journey_screen.dart'; 
-import 'Screen/profile_screen.dart';
-import 'VitaRoundScreen.dart'; // Add VitaRoundScreen for navigation
+import 'VitaRoundScreen.dart';  // Import VitaRoundScreen for navigation
 
 class NavigationHomeScreen extends StatefulWidget {
-  const NavigationHomeScreen({super.key});
+  final String email;  // Accept email as an argument
+
+  const NavigationHomeScreen({Key? key, required this.email}) : super(key: key);
 
   @override
   _NavigationHomeScreenState createState() => _NavigationHomeScreenState();
@@ -16,13 +17,19 @@ class NavigationHomeScreen extends StatefulWidget {
 class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    BookingsScreen(),
-    JourneyScreen(),
-    VitaRoundScreen(),
-    ProfileScreen(), // Add VitaRoundScreen
-  ];
+  List<Widget> _widgetOptions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _widgetOptions = <Widget>[
+      HomeScreen(),
+      BookingsScreen(),
+      JourneyScreen(),
+      VitaRoundScreen(),
+      ProfileScreen(email: widget.email),  // Pass the email to ProfileScreen
+    ];
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -38,16 +45,15 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black, // Set background color to black
-        selectedItemColor: Colors.blue, // Color for selected item
-        unselectedItemColor: Colors.grey, // Color for unselected items
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-
           BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Bookings'),
           BottomNavigationBarItem(icon: Icon(Icons.directions_bus), label: 'Journey'),
-          BottomNavigationBarItem(icon: Icon(Icons.place), label: 'Around VIT'), 
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),// VitaRoundScreen
+          BottomNavigationBarItem(icon: Icon(Icons.place), label: 'Around VIT'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
