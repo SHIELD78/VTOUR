@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class RestaurantDetailScreen extends StatelessWidget {
   static const routeName = '/restaurant-detail';
 
+  const RestaurantDetailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map<String, String>?;
@@ -10,9 +12,9 @@ class RestaurantDetailScreen extends StatelessWidget {
     if (args == null) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Error'),
+          title: const Text('Error'),
         ),
-        body: Center(
+        body: const Center(
           child: Text('No details available.'),
         ),
       );
@@ -28,12 +30,12 @@ class RestaurantDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(args['image']!, width: double.infinity, height: 250.0, fit: BoxFit.cover),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 args['description']!,
-                style: TextStyle(fontSize: 16.0),
+                style: const TextStyle(fontSize: 16.0),
               ),
             ),
           ],

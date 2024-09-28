@@ -5,7 +5,9 @@ import 'location_data.dart';  // Adjusted import for your locs folder
 class VitaRoundScreen extends StatefulWidget {
   static const routeName = '/vita-round';
 
-@override
+  const VitaRoundScreen({super.key});
+
+  @override
   _VitaRoundScreenState createState() => _VitaRoundScreenState();
 }
 
@@ -14,76 +16,126 @@ class _VitaRoundScreenState extends State<VitaRoundScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Around VIT'),
+        title: const Text(
+          'Around VIT',
+          style: TextStyle(
+            fontFamily: 'Roboto', // Custom modern font (replace with your own if needed)
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Colors.black, // Clean black text on white background
+          ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Hot Locations (CarouselSlider similar to HomeScreen)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Hot Locations',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue.shade50], // Subtle gradient background
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Hot Locations (CarouselSlider similar to HomeScreen)
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'Hot Locations',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black, // Consistent text color
+                  ),
+                ),
               ),
-            ),
-            CarouselSlider(
-              options: CarouselOptions(
-                height: 200.0,
-                autoPlay: false,  
-                enlargeCenterPage: true, 
-              ),
-              items: LocationData.hotLocations.map((location) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Card(
-                      elevation: 4,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
-                          image: DecorationImage(
-                            image: AssetImage(location['image']!),  // Image from assets
-                            fit: BoxFit.cover,
-                          ),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 250.0,  // Increase height slightly for better visuals
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  viewportFraction: 0.9,  // Ensures images fit well and have minimal padding
+                ),
+                items: LocationData.hotLocations.map((location) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                        child: Center(
-                          child: Text(
-                            location['name']!,
-                            style: TextStyle(
-                              fontSize: 24.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              backgroundColor: Colors.black54,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20.0),
+                            image: DecorationImage(
+                              image: AssetImage(location['image']!),
+                              fit: BoxFit.cover,  // Ensure the image fits the card properly
+                            ),
+                          ),
+                          child: Align(
+                            alignment: Alignment.bottomLeft,  // Align text to the bottom-left
+                            child: Container(
+                              width: double.infinity,  // Ensure the text background spans across the card
+                              padding: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.6),  // Semi-transparent black background
+                                borderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(15.0),
+                                  bottomRight: Radius.circular(15.0),
+                                ),
+                              ),
+                              child: Text(
+                                location['name']!,
+                                style: const TextStyle(
+                                  fontSize: 20.0,  // Slightly smaller for a cleaner look
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,  // Bold to make the text stand out
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
-            ),
-            SizedBox(height: 20),
-            // Netflix-style horizontal lists
-            _buildCategorySection('Restaurants', LocationData.restaurants),
-            SizedBox(height: 20),
-            _buildCategorySection('Fun Spots', LocationData.funSpots),
-          ],
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 20),
+              // Category Sections
+              _buildCategorySection('Restaurants', LocationData.restaurants),
+              const SizedBox(height: 20),
+              _buildCategorySection('Fun Spots', LocationData.funSpots),
+            ],
+          ),
         ),
       ),
     );
   }
 
+  // Build Category Section (Netflix-style horizontal list)
   Widget _buildCategorySection(String title, List<Map<String, String>> items) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            title,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          child: Row(
+            children: [
+              Icon(Icons.restaurant, color: Colors.blue), // Add icon for each category
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, // Consistent text color
+                ),
+              ),
+            ],
           ),
         ),
         SizedBox(
@@ -114,25 +166,44 @@ class _VitaRoundScreenState extends State<VitaRoundScreen> {
     );
   }
 
+  // Build each card for categories
   Widget _buildCard(Map<String, String> item) {
     return Container(
       width: 150,
-      margin: EdgeInsets.all(8.0),
+      margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5,
+            offset: Offset(0, 5),
+          ),
+        ],
         image: DecorationImage(
           image: AssetImage(item['image']!),
           fit: BoxFit.cover,
         ),
       ),
       child: Align(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.bottomLeft,  // Align text to the bottom-left for better aesthetics
         child: Container(
-          color: Colors.black54,
-          padding: EdgeInsets.all(8.0),
+          width: double.infinity,  // Stretch the background across the width
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.6),  // Semi-transparent black background
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(10.0),
+              bottomRight: Radius.circular(10.0),
+            ),
+          ),
           child: Text(
             item['name']!,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(
+              fontSize: 16.0,  // Slightly smaller for a cleaner look
+              color: Colors.white,
+              fontWeight: FontWeight.bold,  // Bold to make the text stand out
+            ),
           ),
         ),
       ),
@@ -140,8 +211,11 @@ class _VitaRoundScreenState extends State<VitaRoundScreen> {
   }
 }
 
+// Restaurant Detail Screen Code
 class RestaurantDetailScreen extends StatelessWidget {
   static const routeName = '/restaurant-detail';
+
+  const RestaurantDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +224,8 @@ class RestaurantDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(args['name']!),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -157,19 +233,18 @@ class RestaurantDetailScreen extends StatelessWidget {
           children: [
             // Image section
             Image.asset(args['image']!, width: double.infinity, height: 250.0, fit: BoxFit.cover),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             // Description section
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 args['description']!,
-                style: TextStyle(fontSize: 16.0),
+                style: const TextStyle(fontSize: 16.0),
               ),
             ),
-            // Placeholder for future review system
-            SizedBox(height: 20.0),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const SizedBox(height: 20.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Text(
                 "Reviews (to be added later)",
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
@@ -180,4 +255,4 @@ class RestaurantDetailScreen extends StatelessWidget {
       ),
     );
   }
-}
+} 

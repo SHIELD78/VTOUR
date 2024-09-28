@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class PersonalizedItineraryPage extends StatelessWidget {
   final String searchQuery;
 
-  PersonalizedItineraryPage({required this.searchQuery});
+  const PersonalizedItineraryPage({super.key, required this.searchQuery});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Personalized Itinerary'),
+        title: const Text('Personalized Itinerary'),
         backgroundColor: Colors.blue[800],
       ),
       body: Center(

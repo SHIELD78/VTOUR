@@ -74,6 +74,10 @@ flutter:
   - lib/image/taramaa.jpg
   - lib/image/turf.jpg
   - lib/image/zaitoon2.jpg
+  - lib/image/calendar.png
+  - lib/image/gallery1.jpg
+  - lib/image/gallery2.jpg
+  - lib/image/pondi.jpg
  
 
   # An image asset can refer to one or more resolution-specific "variants", see

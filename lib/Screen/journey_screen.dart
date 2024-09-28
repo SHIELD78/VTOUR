@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class JourneyScreen extends StatefulWidget {
+  const JourneyScreen({super.key});
+
   @override
   _JourneyScreenState createState() => _JourneyScreenState();
 }
@@ -48,13 +50,31 @@ class _JourneyScreenState extends State<JourneyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Set dark background
+      backgroundColor: Colors.white, // Set white background for consistency
       appBar: AppBar(
-        title: Text(
-          'Plan Your Journey',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: Colors.black, // Dark app bar for contrast
+        title: RichText(
+          text: const TextSpan(
+            children: [
+              TextSpan(
+                text: 'V',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextSpan(
+                text: 'Tour',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         ),
-        backgroundColor: Colors.black, // Dark app bar
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -65,16 +85,16 @@ class _JourneyScreenState extends State<JourneyScreen> {
             // Display the current question
             Text(
               questions[currentQuestionIndex], // Show the current question
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white, // White text
+                color: Colors.black, // Black text for contrast
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
 
-            // Options for the first question (People count) only
+            // Question 1: Options for the first question (People count)
             if (currentQuestionIndex == 0) ...[
               OptionButton(
                 text: '1 person',
@@ -163,132 +183,19 @@ class _JourneyScreenState extends State<JourneyScreen> {
               ),
             ],
 
-            // Question 3: How long do you want to travel?
-            if (currentQuestionIndex == 2) ...[
-              OptionButton(
-                text: '1 week',
-                isSelected: selectedTravelDuration == '1 week',
-                onTap: () {
-                  setState(() {
-                    selectedTravelDuration = '1 week';
-                  });
-                },
-              ),
-              OptionButton(
-                text: '2 weeks',
-                isSelected: selectedTravelDuration == '2 weeks',
-                onTap: () {
-                  setState(() {
-                    selectedTravelDuration = '2 weeks';
-                  });
-                },
-              ),
-              OptionButton(
-                text: '3-4 weeks',
-                isSelected: selectedTravelDuration == '3-4 weeks',
-                onTap: () {
-                  setState(() {
-                    selectedTravelDuration = '3-4 weeks';
-                  });
-                },
-              ),
-              OptionButton(
-                text: '5+ weeks',
-                isSelected: selectedTravelDuration == '5+ weeks',
-                onTap: () {
-                  setState(() {
-                    selectedTravelDuration = '5+ weeks';
-                  });
-                },
-              ),
-            ],
-
-            // Question 4: What would you like to see?
-            if (currentQuestionIndex == 3) ...[
-              DestinationOption(
-                text: 'Sydney',
-                isSelected: selectedDestinations.contains('Sydney'),
-                onTap: () {
-                  setState(() {
-                    selectedDestinations.contains('Sydney')
-                        ? selectedDestinations.remove('Sydney')
-                        : selectedDestinations.add('Sydney');
-                  });
-                },
-              ),
-              DestinationOption(
-                text: 'Great Barrier Reef',
-                isSelected: selectedDestinations.contains('Great Barrier Reef'),
-                onTap: () {
-                  setState(() {
-                    selectedDestinations.contains('Great Barrier Reef')
-                        ? selectedDestinations.remove('Great Barrier Reef')
-                        : selectedDestinations.add('Great Barrier Reef');
-                  });
-                },
-              ),
-              DestinationOption(
-                text: 'Uluru',
-                isSelected: selectedDestinations.contains('Uluru'),
-                onTap: () {
-                  setState(() {
-                    selectedDestinations.contains('Uluru')
-                        ? selectedDestinations.remove('Uluru')
-                        : selectedDestinations.add('Uluru');
-                  });
-                },
-              ),
-              DestinationOption(
-                text: 'Great Ocean Road',
-                isSelected: selectedDestinations.contains('Great Ocean Road'),
-                onTap: () {
-                  setState(() {
-                    selectedDestinations.contains('Great Ocean Road')
-                        ? selectedDestinations.remove('Great Ocean Road')
-                        : selectedDestinations.add('Great Ocean Road');
-                  });
-                },
-              ),
-            ],
-
-            // Question 5: What is your budget for the trip?
-            if (currentQuestionIndex == 4) ...[
-              Slider(
-                value: budget,
-                min: 900,
-                max: 5100,
-                divisions: 10,
-                onChanged: (value) {
-                  setState(() {
-                    budget = value;
-                  });
-                },
-                label: '\$${budget.round()}',
-              ),
-              Text(
-                'Budget per person: \$${budget.round()}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
-                ),
-              ),
-            ],
-
-            SizedBox(height: 30.0),
-
             // Continue Button
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[800], // Grey background for button
+                backgroundColor: Colors.blue, // Blue background for button
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0), // Rounded edges
                 ),
-                padding: EdgeInsets.symmetric(vertical: 16.0),
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
               ),
               onPressed: () {
                 if (currentQuestionIndex == 0 && selectedPeople == 0) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text(
                         'Please select the number of people.',
                         style: TextStyle(color: Colors.white),
@@ -305,7 +212,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
                 currentQuestionIndex == questions.length - 1
                     ? 'Finish'
                     : 'Next', // Change button text to "Finish" on the last question
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white, // White text
                   fontSize: 16.0,
                 ),
@@ -324,11 +231,11 @@ class OptionButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const OptionButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.isSelected,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -336,56 +243,17 @@ class OptionButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: isSelected
-              ? Colors.grey[800]
-              : Colors.grey[850], // Dark grey shades
-          foregroundColor: Colors.white, // White text
+          backgroundColor: isSelected ? Colors.blue : Colors.grey[300], // Selected and unselected button color
+          foregroundColor: Colors.black, // Text color
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30.0), // Rounded edges
           ),
-          padding: EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
         ),
         onPressed: onTap,
         child: Text(
           text,
-          style: TextStyle(fontSize: 16.0),
-        ),
-      ),
-    );
-  }
-}
-
-class DestinationOption extends StatelessWidget {
-  final String text;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const DestinationOption({
-    Key? key,
-    required this.text,
-    required this.isSelected,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: isSelected
-              ? Colors.grey[800]
-              : Colors.grey[850], // Dark grey shades
-          foregroundColor: Colors.white, // White text
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0), // Rounded edges
-          ),
-          padding: EdgeInsets.symmetric(vertical: 16.0),
-        ),
-        onPressed: onTap,
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 16.0),
+          style: const TextStyle(fontSize: 16.0),
         ),
       ),
     );
@@ -402,60 +270,82 @@ class SummaryScreen extends StatelessWidget {
   final double budget;
 
   const SummaryScreen({
-    Key? key,
+    super.key,
     required this.people,
     required this.travelDate,
     required this.travelDuration,
     required this.destinations,
     required this.budget,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Summary'),
+        backgroundColor: Colors.black,
+        title: RichText(
+          text: const TextSpan(
+            children: [
+              TextSpan(
+                text: 'V',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextSpan(
+                text: 'Tour',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Summary of Your Journey',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20, color: Colors.black),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'People: $people',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: Colors.black),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Travel Date: $travelDate',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: Colors.black),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Duration: $travelDuration',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: Colors.black),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Destinations: ${destinations.join(', ')}',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: Colors.black),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Budget: \$${budget.round()} per person',
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16, color: Colors.black),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                print('Journey Summary Completed.');
+                Navigator.pop(context);
               },
-              child: Text('Done'),
+              child: const Text('Done'),
             ),
           ],
         ),

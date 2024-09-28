@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class InspireTripPage extends StatelessWidget {
   final String searchQuery;
 
-  InspireTripPage({required this.searchQuery});
+  const InspireTripPage({super.key, required this.searchQuery});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class InspireTripPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Inspired Trips'),
+        title: const Text('Inspired Trips'),
         backgroundColor: Colors.orange[600],
       ),
       body: Padding(
@@ -55,25 +55,25 @@ class InspireTripPage extends StatelessWidget {
                   // Destination and shared by information
                   Text(
                     trip['destination'],
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Text(
                     'Shared by ${trip['sharedBy']} · ${trip['date']}',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    style: const TextStyle(color: Colors.grey, fontSize: 14),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     trip['description'],
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
                   // Grid of images for the trip
                   GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -89,10 +89,10 @@ class InspireTripPage extends StatelessWidget {
                       );
                     },
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
                   // Interaction icons (like and comments)
-                  Row(
+                  const Row(
                     children: [
                       Icon(Icons.thumb_up_alt_outlined, color: Colors.grey),
                       SizedBox(width: 5),
@@ -103,7 +103,7 @@ class InspireTripPage extends StatelessWidget {
                       Text('10', style: TextStyle(color: Colors.grey)),
                     ],
                   ),
-                  Divider(),
+                  const Divider(),
                 ],
               ),
             );

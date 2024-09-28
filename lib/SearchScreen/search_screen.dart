@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tripquest/Screen/tab_search_screen.dart'; // Import the new TabSearchScreen
 
 class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -56,8 +58,8 @@ class _SearchScreenState extends State<SearchScreen> {
         title: TextField(
           controller: _searchController,
           autofocus: true,
-          style: TextStyle(color: Colors.white),
-          decoration: InputDecoration(
+          style: const TextStyle(color: Colors.white),
+          decoration: const InputDecoration(
             hintText: 'Start typing here...',
             hintStyle: TextStyle(color: Colors.white70),
             border: InputBorder.none,
@@ -65,43 +67,43 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "Recent Searches",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             RecentSearches(),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "What's India Searching For",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             PopularSearches(),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "Search Results",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // Show filtered search results
             Column(
               children: filteredCities.map((city) {
                 return InkWell(
                   onTap: () => _onCityTap(city),  // Redirect to TabSearchScreen on tap
                   child: ListTile(
-                    leading: Icon(Icons.location_city),
+                    leading: const Icon(Icons.location_city),
                     title: Text(city),
                   ),
                 );
               }).toList(),
             ),
             if (filteredCities.isEmpty && _searchController.text.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text("No results found"),
               ),
           ],
@@ -112,9 +114,11 @@ class _SearchScreenState extends State<SearchScreen> {
 }
 
 class RecentSearches extends StatelessWidget {
+  const RecentSearches({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         ListTile(
           leading: Icon(Icons.history),
@@ -130,9 +134,11 @@ class RecentSearches extends StatelessWidget {
 }
 
 class PopularSearches extends StatelessWidget {
+  const PopularSearches({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         ListTile(
           leading: Icon(Icons.trending_up),

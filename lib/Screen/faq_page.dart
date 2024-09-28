@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FAQPage extends StatefulWidget {
   final String searchQuery;
 
-  FAQPage({required this.searchQuery});
+  const FAQPage({super.key, required this.searchQuery});
 
   @override
   _FAQPageState createState() => _FAQPageState();
@@ -86,7 +86,7 @@ class _FAQPageState extends State<FAQPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Help Desk',
           style: TextStyle(color: Colors.white),
         ),
@@ -100,24 +100,24 @@ class _FAQPageState extends State<FAQPage> {
             // Heading
             Text(
               'We’re here to help you with anything on ${widget.searchQuery}',
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Here you can find answers to frequently asked questions related to ${widget.searchQuery}.',
-              style: TextStyle(fontSize: 16, color: Colors.black54),
+              style: const TextStyle(fontSize: 16, color: Colors.black54),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Search Bar
             TextField(
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search, color: Colors.black54),
+                prefixIcon: const Icon(Icons.search, color: Colors.black54),
                 hintText: 'Search Help',
-                hintStyle: TextStyle(color: Colors.black54),
+                hintStyle: const TextStyle(color: Colors.black54),
                 filled: true,
                 fillColor: Colors.black12,
                 border: OutlineInputBorder(
@@ -135,22 +135,22 @@ class _FAQPageState extends State<FAQPage> {
                 });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // FAQ Section
-            Text(
+            const Text(
               'FAQ',
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // FAQs list
             filteredFaqs.isEmpty
                 ? Text('No FAQs available for ${widget.searchQuery}',
-                    style: TextStyle(color: Colors.black54))
+                    style: const TextStyle(color: Colors.black54))
                 : Expanded(
                     child: ListView.builder(
                       itemCount: filteredFaqs.length,
@@ -159,7 +159,7 @@ class _FAQPageState extends State<FAQPage> {
                           child: ExpansionTile(
                             title: Text(
                               filteredFaqs[index]['question']!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black),
@@ -173,7 +173,7 @@ class _FAQPageState extends State<FAQPage> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   filteredFaqs[index]['answer']!,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14, color: Colors.black54),
                                 ),
                               ),
@@ -190,16 +190,16 @@ class _FAQPageState extends State<FAQPage> {
                   ),
 
             // Bottom section for help
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Align(
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  Text(
+                  const Text(
                     'Still stuck? We\'re just a message away!',
                     style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
                       // Handle sending a message action
@@ -208,11 +208,11 @@ class _FAQPageState extends State<FAQPage> {
                       backgroundColor: Colors
                           .black, // Use backgroundColor instead of primary
                       padding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 16),
+                          const EdgeInsets.symmetric(horizontal: 50, vertical: 16),
                       textStyle:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                    child: Text('Send a message',
+                    child: const Text('Send a message',
                         style: TextStyle(color: Colors.white)),
                   ),
                 ],
@@ -225,7 +225,7 @@ class _FAQPageState extends State<FAQPage> {
         backgroundColor: Colors.black,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white54,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(Icons.notifications), label: 'Notification'),
